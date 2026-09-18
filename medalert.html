@@ -1,0 +1,2549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MedAlert AI</title>
+
+<style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#172033;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none !important;
+}
+
+
+/* =====================================================
+   LOGIN PAGE
+===================================================== */
+
+#loginPage{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0d223b,#21659d);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.login-container{
+    width:100%;
+    max-width:550px;
+    min-height:560px;
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    display:block;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+    /* Login Form */
+
+.login-right{
+    padding:50px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.login-right h2{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.login-subtitle{
+    color:#667085;
+    margin-bottom:25px;
+}
+
+.login-input{
+    margin-bottom:18px;
+}
+
+.login-input label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.input-box{
+    position:relative;
+}
+
+.input-box input{
+    width:100%;
+    padding:14px 45px 14px 14px;
+    border:1px solid #d5dce5;
+    border-radius:10px;
+    outline:none;
+}
+
+.input-box input:focus{
+    border-color:#2563eb;
+}
+
+.input-icon{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#667085;
+}
+
+.login-btn{
+    width:100%;
+    border:none;
+    padding:15px;
+    background:#2563eb;
+    color:white;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.login-btn:hover{
+    background:#174bb5;
+}
+
+.login-message{
+    text-align:center;
+    margin-top:15px;
+    font-size:14px;
+}
+
+.login-switch{
+    text-align:center;
+    margin-top:22px;
+    color:#667085;
+    font-size:14px;
+}
+
+.login-switch span{
+    color:#2563eb;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.demo-login{
+    background:#f1f5f9;
+    padding:12px;
+    border-radius:10px;
+    margin-top:20px;
+    text-align:center;
+    font-size:13px;
+    color:#667085;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+    height:70px;
+    background:#10243e;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    background:#e63946;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.logo h2{
+    font-size:20px;
+}
+
+.logo small{
+    color:#b8c6d9;
+}
+
+nav{
+    display:flex;
+    gap:5px;
+}
+
+nav button{
+    background:transparent;
+    border:none;
+    color:white;
+    padding:10px 12px;
+    border-radius:8px;
+}
+
+nav button:hover{
+    background:#1f4168;
+}
+
+.logout-btn{
+    background:#e63946 !important;
+}
+
+.menu-btn{
+    display:none;
+    background:none;
+    border:none;
+    color:white;
+    font-size:25px;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main{
+    width:90%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+    background:linear-gradient(135deg,#10243e,#23649c);
+    color:white;
+    border-radius:25px;
+    padding:45px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:25px;
+}
+
+.hero-content{
+    max-width:700px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    line-height:1.7;
+    color:#dce8f4;
+}
+
+.hero-icon{
+    font-size:100px;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn{
+    border:none;
+    padding:13px 20px;
+    border-radius:10px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.primary{
+    background:#2563eb;
+    color:white;
+}
+
+.primary:hover{
+    background:#174bb5;
+}
+
+.danger{
+    background:#e63946;
+    color:white;
+}
+
+.danger:hover{
+    background:#c72835;
+}
+
+.secondary{
+    background:#e8edf4;
+    color:#172033;
+}
+
+.success{
+    background:#16a34a;
+    color:white;
+}
+
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    transition:.2s;
+}
+
+.card-icon{
+    font-size:35px;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#667085;
+    line-height:1.6;
+    margin-top:8px;
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.stat h2{
+    margin-top:8px;
+}
+
+
+/* =====================================================
+   FORMS
+===================================================== */
+
+.form-card{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    margin-bottom:25px;
+}
+
+.form-card h2{
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#667085;
+    margin-bottom:25px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin:12px 0 7px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:13px;
+    border:1px solid #d5dce5;
+    border-radius:9px;
+    outline:none;
+}
+
+textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:#2563eb;
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile{
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:25px;
+}
+
+.profile-left{
+    background:#10243e;
+    color:white;
+    padding:35px;
+    border-radius:20px;
+    text-align:center;
+}
+
+.avatar{
+    width:100px;
+    height:100px;
+    background:#e63946;
+    border-radius:50%;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+    margin-bottom:20px;
+}
+
+.profile-left p{
+    color:#bdc9d8;
+    margin-top:8px;
+}
+
+.profile-right{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:20px;
+}
+
+.info{
+    background:#f5f7fa;
+    padding:16px;
+    border-radius:10px;
+}
+
+.info span{
+    display:block;
+    color:#7a8493;
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+
+/* =====================================================
+   ASSESSMENT
+===================================================== */
+
+.result{
+    display:none;
+}
+
+.result.show{
+    display:block;
+}
+
+.urgency{
+    padding:25px;
+    border-radius:15px;
+    margin-top:20px;
+}
+
+.low{
+    background:#ecfdf3;
+    border-left:6px solid #16a34a;
+}
+
+.moderate{
+    background:#fff7ed;
+    border-left:6px solid #f97316;
+}
+
+.emergency{
+    background:#fff1f2;
+    border-left:6px solid #e63946;
+}
+
+.urgency p{
+    color:#475467;
+    line-height:1.6;
+}
+
+
+/* =====================================================
+   SERVICES
+===================================================== */
+
+.service-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.service{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
+
+.service-icon{
+    font-size:40px;
+    margin-bottom:12px;
+}
+
+.service p{
+    color:#667085;
+    line-height:1.6;
+    margin:10px 0;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    align-items:center;
+    justify-content:center;
+    z-index:3000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:90%;
+    max-width:500px;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+}
+
+.modal-box h2{
+    margin-bottom:12px;
+}
+
+.modal-box p{
+    color:#667085;
+    line-height:1.6;
+}
+
+
+/* =====================================================
+   NOTIFICATION
+===================================================== */
+
+.notification{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#10243e;
+    color:white;
+    padding:16px 20px;
+    border-radius:10px;
+    display:none;
+    z-index:4000;
+}
+
+.notification.show{
+    display:block;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+    background:#10243e;
+    color:white;
+    text-align:center;
+    padding:25px;
+    margin-top:50px;
+}
+
+footer p{
+    color:#b8c6d9;
+    font-size:13px;
+    margin-top:7px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:900px){
+
+    .login-container{
+        grid-template-columns:1fr;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .card-grid,
+    .service-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .profile{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        text-align:center;
+        flex-direction:column;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .login-right{
+        padding:30px 22px;
+    }
+
+    .hero{
+        padding:30px 20px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .hero-icon{
+        font-size:70px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    main{
+        width:94%;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN PAGE
+===================================================== -->
+
+<section id="loginPage">
+
+    <div class="login-container">
+        <!-- LOGIN FORM -->
+
+        <div class="login-right">
+
+            <!-- LOGIN FORM -->
+
+            <div id="loginForm">
+
+                <h2>Welcome Back 👋</h2>
+
+                <p class="login-subtitle">
+                    Sign in to continue to MedAlert AI.
+                </p>
+
+
+                <div class="login-input">
+
+                    <label>Email</label>
+
+                    <div class="input-box">
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="Enter your email">
+
+                        <span class="input-icon">
+                            📧
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-input">
+
+                    <label>Password</label>
+
+                    <div class="input-box">
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password">
+
+                        <span class="input-icon"
+                              onclick="togglePassword('loginPassword','loginEye')"
+                              id="loginEye">
+                            👁
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button class="login-btn"
+                        onclick="loginUser()">
+
+                    🔐 Sign In
+
+                </button>
+
+
+                <div class="login-message"
+                     id="loginMessage">
+                </div>
+
+
+                <div class="login-switch">
+
+                    Don't have an account?
+
+                    <span onclick="showSignup()">
+                        Create Account
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SIGNUP FORM -->
+
+            <div id="signupForm"
+                 class="hidden">
+
+                <h2>Create Account</h2>
+
+                <p class="login-subtitle">
+                    Create your MedAlert AI account.
+                </p>
+
+
+                <div class="login-input">
+
+                    <label>Full Name</label>
+
+                    <div class="input-box">
+
+                        <input
+                            type="text"
+                            id="signupName"
+                            placeholder="Enter your name">
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-input">
+
+                    <label>Email</label>
+
+                    <div class="input-box">
+
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            placeholder="Enter your email">
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-input">
+
+                    <label>Password</label>
+
+                    <div class="input-box">
+
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            placeholder="Create password">
+
+                        <span class="input-icon"
+                              onclick="togglePassword('signupPassword','signupEye')"
+                              id="signupEye">
+
+                            👁
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button class="login-btn"
+                        onclick="createAccount()">
+
+                    📝 Create Account
+
+                </button>
+
+
+                <div class="login-message"
+                     id="signupMessage">
+                </div>
+
+
+                <div class="login-switch">
+
+                    Already have an account?
+
+                    <span onclick="showLogin()">
+                        Sign In
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<div id="app"
+     class="hidden">
+
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🚑
+        </div>
+
+        <div>
+
+            <h2>MedAlert AI</h2>
+
+            <small>
+                
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <nav id="navigation">
+
+        <button onclick="openPage('home')">
+            🏠 Home
+        </button>
+
+        <button onclick="openPage('dashboard')">
+            📊 Dashboard
+        </button>
+
+        <button onclick="openPage('profile')">
+            👤 Profile
+        </button>
+
+        <button onclick="openPage('assessment')">
+            🧠 AI Analysis
+        </button>
+
+        <button onclick="openPage('services')">
+            📍 Services
+        </button>
+
+        <button onclick="openPage('alert')">
+            🚨 Alert
+        </button>
+
+        <button class="logout-btn"
+                onclick="logout()">
+
+            🚪 Logout
+
+        </button>
+
+    </nav>
+
+
+    <button class="menu-btn"
+            onclick="toggleMenu()">
+
+        ☰
+
+    </button>
+
+</header>
+
+
+<main>
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home"
+         class="page active">
+
+
+    <div class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                MedAlert AI
+            </h1>
+
+            <p>
+
+                AI-assisted emergency decision-support platform
+                that connects patient information, symptom analysis,
+                urgency assessment and emergency-service discovery
+                in one simple workflow.
+
+            </p>
+
+
+            <button class="btn danger"
+                    onclick="openPage('assessment')">
+
+                🧠 Start AI Assessment
+
+            </button>
+
+        </div>
+
+
+        <div class="hero-icon">
+
+            ❤️‍🩹
+
+        </div>
+
+    </div>
+
+
+    <div class="card-grid">
+
+
+        <div class="card"
+             onclick="openPage('profile')">
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h3>
+                Patient Profile
+            </h3>
+
+            <p>
+                View age, medical conditions,
+                allergies and medical history.
+            </p>
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('assessment')">
+
+            <div class="card-icon">
+                🧠
+            </div>
+
+            <h3>
+                AI Symptom Analysis
+            </h3>
+
+            <p>
+                Enter symptoms and receive
+                a prototype urgency assessment.
+            </p>
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('services')">
+
+            <div class="card-icon">
+                📍
+            </div>
+
+            <h3>
+                Emergency Services
+            </h3>
+
+            <p>
+                Find hospitals and ambulance services.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dashboard"
+         class="page">
+
+    <h1>
+        Dashboard
+    </h1>
+
+    <br>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            ❤️ Health Status
+
+            <h2>
+                Active
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            🧠 AI Assessments
+
+            <h2 id="assessmentCount">
+                0
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            📍 Emergency Services
+
+            <h2>
+                6+
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            🚨 Emergency Status
+
+            <h2>
+                Ready
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-grid">
+
+
+        <div class="card"
+             onclick="openPage('assessment')">
+
+            <div class="card-icon">
+                🧠
+            </div>
+
+            <h3>
+                Start Assessment
+            </h3>
+
+            <p>
+                Analyze your reported symptoms.
+            </p>
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('services')">
+
+            <div class="card-icon">
+                🏥
+            </div>
+
+            <h3>
+                Find Hospital
+            </h3>
+
+            <p>
+                View nearby emergency services.
+            </p>
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('alert')">
+
+            <div class="card-icon">
+                🚨
+            </div>
+
+            <h3>
+                Emergency Alert
+            </h3>
+
+            <p>
+                Contact emergency services quickly.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<section id="profile"
+         class="page">
+
+    <div class="profile">
+
+
+        <div class="profile-left">
+
+            <div class="avatar">
+                👤
+            </div>
+
+            <h2 id="displayName">
+                Arun Kumar
+            </h2>
+
+            <p>
+                Patient
+            </p>
+
+
+            <button class="btn secondary"
+                    onclick="editProfile()">
+
+                ✏️ Edit Profile
+
+            </button>
+
+        </div>
+
+
+        <div class="profile-right">
+
+            <h2>
+                Patient Information
+            </h2>
+
+
+            <div class="info-grid">
+
+                <div class="info">
+
+                    <span>
+                        Age
+                    </span>
+
+                    25 Years
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>
+                        Blood Group
+                    </span>
+
+                    O+
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>
+                        Medical Condition
+                    </span>
+
+                    None reported
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>
+                        Allergies
+                    </span>
+
+                    None reported
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>
+                        Emergency Contact
+                    </span>
+
+                    +91 98765 43210
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>
+                        Medical History
+                    </span>
+
+                    Available
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ASSESSMENT
+===================================================== -->
+
+<section id="assessment"
+         class="page">
+
+
+    <div class="form-card">
+
+        <h2>
+            🧠 AI Symptom Assessment
+        </h2>
+
+        <p class="subtitle">
+
+            Enter symptoms and relevant medical information.
+
+        </p>
+
+
+        <label>
+            Symptoms
+        </label>
+
+        <textarea
+            id="symptoms"
+            placeholder="Example: fever, headache, chest pain...">
+        </textarea>
+
+
+        <label>
+            Medical History
+        </label>
+
+        <textarea
+            id="history"
+            placeholder="Enter medical history...">
+        </textarea>
+
+
+        <label>
+            Allergies
+        </label>
+
+        <input
+            id="allergies"
+            placeholder="Example: None">
+
+
+        <label>
+            Duration
+        </label>
+
+        <select id="duration">
+
+            <option>
+                Less than 1 hour
+            </option>
+
+            <option>
+                1 - 24 hours
+            </option>
+
+            <option>
+                More than 24 hours
+            </option>
+
+        </select>
+
+
+        <button class="btn primary"
+                onclick="analyzeSymptoms()">
+
+            🔍 Analyze Symptoms
+
+        </button>
+
+
+        <button class="btn secondary"
+                onclick="clearForm()">
+
+            🗑 Clear
+
+        </button>
+
+    </div>
+
+
+    <div id="result"
+         class="result">
+
+        <div class="form-card">
+
+            <h2>
+                AI Assessment Result
+            </h2>
+
+
+            <div id="urgencyBox"
+                 class="urgency">
+
+                <h2 id="urgencyTitle">
+                </h2>
+
+                <p id="urgencyText">
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <h2>
+                💡 Medical Guidance
+            </h2>
+
+            <br>
+
+            <p id="guidance"
+               style="line-height:1.7">
+            </p>
+
+
+            <button class="btn primary"
+                    onclick="openPage('services')">
+
+                📍 Find Nearby Services
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<section id="services"
+         class="page">
+
+
+    <div class="form-card">
+
+        <h2>
+            📍 Emergency Services
+        </h2>
+
+        <p class="subtitle">
+
+            Locate nearby hospitals and emergency services.
+
+        </p>
+
+
+        <button class="btn primary"
+                onclick="getLocation()">
+
+            📍 Use My Location
+
+        </button>
+
+
+        <p id="locationText"
+           style="margin-top:15px;color:#667085">
+        </p>
+
+    </div>
+
+
+    <div class="service-grid">
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                🏥
+            </div>
+
+            <h3>
+                City Care Hospital
+            </h3>
+
+            <p>
+
+                Emergency Department<br>
+                24/7 Service<br>
+                Distance: 2.4 km
+
+            </p>
+
+
+            <button class="btn primary"
+                    onclick="openMap('hospital')">
+
+                🗺 View Map
+
+            </button>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                🏥
+            </div>
+
+            <h3>
+                Government General Hospital
+            </h3>
+
+            <p>
+
+                Emergency Care<br>
+                Ambulance Available<br>
+                Distance: 3.1 km
+
+            </p>
+
+
+            <button class="btn primary"
+                    onclick="openMap('government hospital')">
+
+                🗺 View Map
+
+            </button>
+
+        </div>
+
+
+        <div class="service">
+
+            <div class="service-icon">
+                🚑
+            </div>
+
+            <h3>
+                Emergency Ambulance
+            </h3>
+
+            <p>
+
+                24/7 Emergency Response<br>
+                Quick Contact<br>
+                Location Sharing
+
+            </p>
+
+
+            <button class="btn danger"
+                    onclick="callEmergency()">
+
+                📞 Call Ambulance
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     EMERGENCY ALERT
+===================================================== -->
+
+<section id="alert"
+         class="page">
+
+
+    <div class="form-card"
+         style="text-align:center">
+
+
+        <div style="font-size:70px">
+            🚨
+        </div>
+
+
+        <h1>
+            Emergency Alert
+        </h1>
+
+
+        <p class="subtitle">
+
+            Quickly contact emergency services
+            or share your current location.
+
+        </p>
+
+
+        <button class="btn danger"
+                onclick="callEmergency()">
+
+            📞 Call Emergency Service
+
+        </button>
+
+
+        <button class="btn primary"
+                onclick="shareLocation()">
+
+            📍 Share My Location
+
+        </button>
+
+
+        <p id="alertMessage"
+           style="margin-top:20px">
+        </p>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+    <h3>
+        MedAlert AI
+    </h3>
+
+    <p>
+         |
+        Department of Artificial Intelligence and Data Science
+    </p>
+
+    <p>
+        Prototype for decision support —
+        not a medical diagnosis.
+    </p>
+
+</footer>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div id="modal"
+     class="modal">
+
+    <div class="modal-box">
+
+        <h2 id="modalTitle">
+            MedAlert AI
+        </h2>
+
+        <p id="modalText">
+            Information
+        </p>
+
+        <button class="btn primary"
+                onclick="closeModal()">
+
+            OK
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     NOTIFICATION
+===================================================== -->
+
+<div id="notification"
+     class="notification">
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   LOGIN / SIGNUP
+===================================================== */
+
+
+/* Demo Account */
+
+
+
+
+/* LOGIN */
+
+/* =====================================================
+   LOGIN / SIGNUP - FLASK BACKEND
+===================================================== */
+
+let currentUser = null;
+
+
+/* LOGIN */
+async function loginUser() {
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const message = document.getElementById("loginMessage");
+
+    if (!email || !password) {
+        message.style.color = "#e63946";
+        message.innerText = "Please enter email and password.";
+        return;
+    }
+
+    try {
+
+        const response = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        console.log("LOGIN RESPONSE:", data);
+
+        if (data.success) {
+
+            currentUser = data.user;
+
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data.user)
+            );
+
+            localStorage.setItem(
+                "user_id",
+                data.user.id
+            );
+
+            message.style.color = "#16a34a";
+            message.innerText = "Login successful!";
+
+            setTimeout(function () {
+                showApplication();
+            }, 500);
+
+        } else {
+
+            message.style.color = "#e63946";
+            message.innerText =
+                data.message || "Invalid email or password.";
+        }
+
+    } catch (error) {
+
+        console.error("LOGIN ERROR:", error);
+
+        message.style.color = "#e63946";
+        message.innerText =
+            "Cannot connect to server.";
+    }
+}
+
+
+/* SHOW APPLICATION */
+function showApplication() {
+
+    document.getElementById("loginPage")
+        .classList.add("hidden");
+
+    document.getElementById("app")
+        .classList.remove("hidden");
+
+    if (currentUser) {
+
+        const displayName =
+            document.getElementById("displayName");
+
+        if (displayName) {
+            displayName.innerText = currentUser.name;
+        }
+    }
+
+    openPage("home");
+}
+
+
+/* SIGNUP PAGE */
+function showSignup() {
+
+    document.getElementById("loginForm")
+        .classList.add("hidden");
+
+    document.getElementById("signupForm")
+        .classList.remove("hidden");
+}
+
+
+/* LOGIN PAGE */
+function showLogin() {
+
+    document.getElementById("signupForm")
+        .classList.add("hidden");
+
+    document.getElementById("loginForm")
+        .classList.remove("hidden");
+}
+
+
+/* CREATE ACCOUNT */
+async function createAccount() {
+
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+    const password = document.getElementById("signupPassword").value;
+    const message = document.getElementById("signupMessage");
+
+    if (!name || !email || !password) {
+        message.style.color = "#e63946";
+        message.innerText = "Please fill all fields.";
+        return;
+    }
+
+    if (password.length < 6) {
+        message.style.color = "#e63946";
+        message.innerText = "Password must contain at least 6 characters.";
+        return;
+    }
+
+    message.innerText = "Creating account...";
+    message.style.color = "#667085";
+
+    try {
+
+        const response = await fetch("/api/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        console.log("SIGNUP:", data);
+
+        if (response.ok && data.success) {
+
+            message.style.color = "#16a34a";
+            message.innerText = "Account created successfully!";
+
+            setTimeout(() => {
+
+                showLogin();
+
+                document.getElementById("loginEmail").value = email;
+                document.getElementById("loginPassword").value = "";
+
+            }, 800);
+
+        } else {
+
+            message.style.color = "#e63946";
+            message.innerText =
+                data.message || "Signup failed.";
+
+        }
+
+    } catch (error) {
+
+        console.error("SIGNUP ERROR:", error);
+
+        message.style.color = "#e63946";
+        message.innerText =
+            "Cannot connect to server.";
+
+    }
+}
+/* PASSWORD SHOW / HIDE */
+
+function togglePassword(inputId, iconId){
+
+    let input =
+        document.getElementById(inputId);
+
+    let icon =
+        document.getElementById(iconId);
+
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+        icon.innerText = "🙈";
+
+    }
+
+    else{
+
+        input.type = "password";
+
+        icon.innerText = "👁";
+
+    }
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+    if(confirm("Are you sure you want to logout?")){
+
+        document.getElementById("app")
+                .classList.add("hidden");
+
+        document.getElementById("loginPage")
+                .classList.remove("hidden");
+
+
+        document.getElementById("loginEmail")
+                .value = "";
+
+        document.getElementById("loginPassword")
+                .value = "";
+
+
+        showLogin();
+
+
+        showNotification(
+            "Logged out successfully"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function openPage(pageId){
+
+    let pages =
+        document.querySelectorAll(".page");
+
+
+    pages.forEach(function(page){
+
+        page.classList.remove("active");
+
+    });
+
+
+    let selected =
+        document.getElementById(pageId);
+
+
+    if(selected){
+
+        selected.classList.add("active");
+
+    }
+
+
+    window.scrollTo({
+
+        top:0,
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+function toggleMenu(){
+
+    let nav =
+        document.getElementById("navigation");
+
+
+    if(nav.style.display === "flex"){
+
+        nav.style.display = "none";
+
+    }
+
+    else{
+
+        nav.style.display = "flex";
+
+        nav.style.flexDirection = "column";
+
+        nav.style.position = "absolute";
+
+        nav.style.top = "70px";
+
+        nav.style.right = "10px";
+
+        nav.style.background = "#10243e";
+
+        nav.style.padding = "15px";
+
+        nav.style.borderRadius = "10px";
+
+    }
+
+}
+
+
+/* =====================================================
+   AI SYMPTOM ANALYSIS
+===================================================== */
+
+let assessmentCount = 0;
+
+
+function analyzeSymptoms(){
+
+    let symptoms =
+        document.getElementById("symptoms")
+        .value
+        .toLowerCase();
+
+
+    if(symptoms.trim() === ""){
+
+        showModal(
+            "Missing Information",
+            "Please enter your symptoms before starting the assessment."
+        );
+
+        return;
+
+    }
+
+
+    let emergencySymptoms = [
+
+        "chest pain",
+        "difficulty breathing",
+        "cannot breathe",
+        "severe bleeding",
+        "unconscious",
+        "seizure",
+        "stroke",
+        "heart attack"
+
+    ];
+
+
+    let moderateSymptoms = [
+
+        "high fever",
+        "vomiting",
+        "dizziness",
+        "severe headache",
+        "abdominal pain",
+        "persistent pain"
+
+    ];
+
+
+    let level = "low";
+
+
+    for(let symptom of emergencySymptoms){
+
+        if(symptoms.includes(symptom)){
+
+            level = "emergency";
+
+            break;
+
+        }
+
+    }
+
+
+    if(level === "low"){
+
+        for(let symptom of moderateSymptoms){
+
+            if(symptoms.includes(symptom)){
+
+                level = "moderate";
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    let box =
+        document.getElementById("urgencyBox");
+
+    let title =
+        document.getElementById("urgencyTitle");
+
+    let text =
+        document.getElementById("urgencyText");
+
+    let guidance =
+        document.getElementById("guidance");
+
+
+    box.className = "urgency";
+
+
+    if(level === "emergency"){
+
+        box.classList.add("emergency");
+
+        title.innerHTML =
+            "🚨 Emergency";
+
+        text.innerHTML =
+            "The reported symptoms may require immediate professional medical attention.";
+
+        guidance.innerHTML =
+            "• Contact emergency services immediately.<br>" +
+            "• Do not delay professional medical care.<br>" +
+            "• If possible, stay with a trusted person.<br>" +
+            "• Use the Emergency Alert or Nearby Services section.";
+
+    }
+
+
+    else if(level === "moderate"){
+
+        box.classList.add("moderate");
+
+        title.innerHTML =
+            "⚠️ Moderate";
+
+        text.innerHTML =
+            "The reported symptoms may require timely medical evaluation.";
+
+        guidance.innerHTML =
+            "• Consider contacting a qualified healthcare professional.<br>" +
+            "• Monitor your symptoms carefully.<br>" +
+            "• Seek urgent care if symptoms become severe.<br>" +
+            "• Nearby medical services are available.";
+
+    }
+
+
+    else{
+
+        box.classList.add("low");
+
+        title.innerHTML =
+            "✅ Low";
+
+        text.innerHTML =
+            "The reported symptoms do not match the emergency patterns in this prototype.";
+
+        guidance.innerHTML =
+            "• Continue monitoring your symptoms.<br>" +
+            "• Consider routine medical advice if symptoms persist.<br>" +
+            "• Seek emergency care if severe warning symptoms develop.";
+
+    }
+
+
+    document.getElementById("result")
+            .classList.add("show");
+
+
+    assessmentCount++;
+
+
+    document.getElementById("assessmentCount")
+            .innerText = assessmentCount;
+
+
+    showNotification(
+        "AI assessment completed"
+    );
+
+}
+
+
+/* =====================================================
+   CLEAR
+===================================================== */
+
+function clearForm(){
+
+    document.getElementById("symptoms")
+            .value = "";
+
+    document.getElementById("history")
+            .value = "";
+
+    document.getElementById("allergies")
+            .value = "";
+
+
+    document.getElementById("result")
+            .classList.remove("show");
+
+}
+
+
+/* =====================================================
+   LOCATION
+===================================================== */
+
+function getLocation(){
+
+    let locationText =
+        document.getElementById("locationText");
+
+
+    if(!navigator.geolocation){
+
+        locationText.innerText =
+            "Location is not supported by your browser.";
+
+        return;
+
+    }
+
+
+    locationText.innerText =
+        "📍 Detecting your location...";
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            let latitude =
+                position.coords.latitude;
+
+            let longitude =
+                position.coords.longitude;
+
+
+            locationText.innerHTML =
+                "✅ Location detected.<br>" +
+                "Latitude: " +
+                latitude.toFixed(4) +
+                " | Longitude: " +
+                longitude.toFixed(4);
+
+
+            showNotification(
+                "Location detected successfully"
+            );
+
+        },
+
+
+        function(){
+
+            locationText.innerText =
+                "⚠️ Location permission denied.";
+
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+function openMap(place){
+
+    let url =
+        "https://www.google.com/maps/search/?api=1&query="
+        + encodeURIComponent(place);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
+   EMERGENCY
+===================================================== */
+
+function callEmergency(){
+
+    showModal(
+        "Emergency Service",
+        "The emergency calling option will now be opened."
+    );
+
+
+    setTimeout(function(){
+
+        window.location.href =
+            "tel:112";
+
+    },1200);
+
+}
+
+
+/* =====================================================
+   SHARE LOCATION
+===================================================== */
+
+function shareLocation(){
+
+    if(!navigator.geolocation){
+
+        showModal(
+            "Location Error",
+            "Location sharing is not supported by this browser."
+        );
+
+        return;
+
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            let latitude =
+                position.coords.latitude;
+
+            let longitude =
+                position.coords.longitude;
+
+
+            let message =
+                "Emergency! My location: " +
+                "https://www.google.com/maps?q=" +
+                latitude +
+                "," +
+                longitude;
+
+
+            if(navigator.share){
+
+                navigator.share({
+
+                    title:
+                        "MedAlert AI Emergency",
+
+                    text:
+                        message
+
+                });
+
+            }
+
+            else{
+
+                navigator.clipboard.writeText(
+                    message
+                );
+
+
+                document.getElementById(
+                    "alertMessage"
+                ).innerText =
+                    "✅ Location link copied. Send it to your emergency contact.";
+
+            }
+
+        },
+
+
+        function(){
+
+            document.getElementById(
+                "alertMessage"
+            ).innerText =
+                "⚠️ Unable to access your location.";
+
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+function editProfile(){
+
+    showModal(
+        "Edit Profile",
+        "Profile editing can be connected to the backend database in the next stage."
+    );
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function showModal(title,text){
+
+    document.getElementById("modalTitle")
+            .innerText = title;
+
+    document.getElementById("modalText")
+            .innerText = text;
+
+    document.getElementById("modal")
+            .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document.getElementById("modal")
+            .classList.remove("show");
+
+}
+
+
+/* =====================================================
+   NOTIFICATION
+===================================================== */
+
+function showNotification(message){
+
+    let notification =
+        document.getElementById("notification");
+
+
+    notification.innerText =
+        message;
+
+
+    notification.classList.add("show");
+
+
+    setTimeout(function(){
+
+        notification.classList.remove("show");
+
+    },2500);
+
+}
+
+
+/* =====================================================
+   KEYBOARD LOGIN
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            let loginVisible =
+                !document
+                .getElementById("loginForm")
+                .classList.contains("hidden");
+
+
+            if(loginVisible){
+
+                loginUser();
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
